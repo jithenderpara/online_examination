@@ -67,6 +67,9 @@ app.get("/home", (req, res) => {
  * all post Methods
  */
 app.get("/questions", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+   res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     questions= get_questions()
     res.status(200).send(questions);
   })

@@ -5,7 +5,7 @@ function get_questions() {
     "B": "speed up",
     "C": "proceed with caution",
     "D": "honk the horn",
-    "answer": "A"
+    "answer": "A",
   }, {
     "question": "A knish is traditionally stuffed with what filling?",
     "A": "potato",

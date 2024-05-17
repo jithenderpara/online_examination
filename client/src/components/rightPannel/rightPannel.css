@@ -1,0 +1,61 @@
+
+.timer{
+    color: green;
+    font-size: 3.5rem;
+    margin: 50px;
+    
+    }
+    .stopwatch-h{
+    margin-left:30px;
+    }
+    .stopwatch{
+    /* margin-left: 0; */
+    /* width: 400px; */
+    /* margin: 50px auto; */
+    /* padding: 30px; */
+    border: none; /* Remove border property */
+    border-bottom: 1px solid #ddd; /* Add bottom border */
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #ddd;
+    /* border-bottom: #ddd; */
+    }
+    .total-time-h{
+    padding: 0px;
+    border: none; /* Remove border property */
+    border-bottom: 1px solid #ddd; /* Add bottom border */
+    border-radius: 4px;
+    height: 50px;
+    font-size: 2rem;;
+    /* margin-top: 0px; */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fdfdfdbd;
+    }
+    .summary-text{
+    margin-top:0px ;
+    margin-right: 100px;
+    }
+    .summary-text-M{
+    
+    background-color: rgb(79, 143, 244);
+    }
+    .total-time{
+    float: right;
+    font-size: 2rem;
+    }
+    .question-section{
+    height: 100vh;
+    display: inline;
+    }
+    .buttons{
+    padding: 10px;
+    justify-content: space-between;
+    display: flex;
+    gap: 5px;
+    }
+    .grid-btn{
+    
+    padding: 10px;   
+    margin-top: 200px;
+    font-size: 1.5rem;
+    }

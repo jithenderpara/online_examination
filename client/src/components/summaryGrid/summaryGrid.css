@@ -1,0 +1,54 @@
+
+aside.right-panel {
+    position: fixed; /* Fix the panel on the right */
+    right: 0; /* Position it at the right edge */
+    top: 0; /* Start from the top */
+    width: 380px; /* Adjust width as needed */
+    background-color: #f0f0f0;
+    padding: 20px;
+    flex: 1;
+    min-height: 100vh;
+    height: 100vh;
+    border-style: groove;
+    overflow-y: scroll; 
+    /* Enable scrolling if content overflows */
+}
+.grid-container {
+display: grid;
+/* flex-wrap: wrap; */
+grid-template-columns: repeat(7, 1fr); /* Adjust for 6 columns */
+grid-gap: 10px; /* Adjust spacing between boxes (optional) */
+}
+.summary-grid {
+display: grid;
+margin: 0px;
+/* flex-wrap: wrap; */
+grid-template-columns: repeat(4, 1fr); /* Adjust for 6 columns */
+/* gap: 20px; */
+/* grid-template-rows: repeat(1, 1fr); Adjust for 6 columns */
+grid-gap: 10px; /* Adjust spacing between boxes (optional) */
+}
+.grid-item-sumarry{
+width: 40px;
+height: 40px;
+background-color: #1cdf1c;
+border: 1px solid #ddd;
+color: white;
+ /*display: flex; /* Allow for positioning the number inside 
+justify-content: center;  Center the number horizontally */
+/*align-items: center; Center the number vertically */
+
+}
+.grid-item {
+width: 40px;
+height: 40px;
+background-color: #9e9d9d;
+border: 1px solid #ddd;
+color: white;
+display: flex; /* Allow for positioning the number inside */
+justify-content: center; /* Center the number horizontally */
+align-items: center; /* Center the number vertically */
+}
+.summaryGrid p{
+    font-size: 2.5rem; margin: 0px;
+}
