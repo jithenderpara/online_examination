@@ -1,5 +1,5 @@
 import './stopwatch.css';
-
+import React, { Component }  from 'react';
 function Stopwatch() {
     return (
         <div class="stopwatch">

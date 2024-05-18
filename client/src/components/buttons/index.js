@@ -1,5 +1,5 @@
 import './buttons.css';
-
+import React, { Component }  from 'react';
 function Buttons({onClickCallback}) {
     return (
         <div class="buttons">

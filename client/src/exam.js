@@ -8,6 +8,7 @@ function Exam() {
   const [questionId, setQuestionId] = useState(0);
   const [userAnsers, setuserAnsers] = useState([]);
   const [userSelected, setuserSelected] = useState(null);
+  
   useEffect(() => {
     fetch('http://localhost:3000/questions')
       .then(response => response.json())
@@ -65,15 +66,18 @@ function Exam() {
     }
   }
   return (
-    <div class="question-section">
-      <section class="question">
-        <Questions userAns={userAnsers.find(o => o.id === questionId)}
-          questionInfo={question}
-          clickCallback={(e, value) => getQuestion(e, value)}
-          saveOptions={(e, value) => saveOptions(e, value)} />
-        {data && <RightPannel count={data.length} selectedIndex={question.id}/>}
-      </section>
+    <div>
+      <div class="question-section">
+        <section class="question">
+          <Questions userAns={userAnsers.find(o => o.id === questionId)}
+            questionInfo={question}
+            clickCallback={(e, value) => getQuestion(e, value)}
+            saveOptions={(e, value) => saveOptions(e, value)} />
+          {data && <RightPannel count={data.length} selectedIndex={question.id} />}
+        </section>
+      </div>
     </div>
+
   );
 }
 

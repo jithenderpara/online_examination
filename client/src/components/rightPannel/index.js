@@ -1,6 +1,7 @@
 import './rightPannel.css';
 import SummaryGrid from '../summaryGrid';
 import Stopwatch from '../stopwatch';
+import React, { Component }  from 'react';
 function RightPannel({ count, selectedIndex }) {
     let List = ({ value }) => {
         console.log(value)

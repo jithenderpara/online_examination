@@ -1,5 +1,5 @@
 import './summaryGrid.css';
-
+import React, { Component }  from 'react';
 function SummaryGrid() {
     return (
         <aside className='summaryGrid'>

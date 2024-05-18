@@ -9,22 +9,22 @@ var app = express();
 var allUsers = [];
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-const {handle_database, handle_login} = require("./dataConnection")
-const {get_questions} = require("./questions")
+const { handle_database, handle_login } = require("./dataConnection")
+const { get_questions } = require("./questions")
 // Set up Global configuration access
 dotenv.config();
 let PORT = process.env.PORT || 3000;
 io.on('connection', client => {
   client.on('newUserEmiter', ({ userName, id }) => {
-  console.log({ userName, id }, "new users")
-    
+    console.log({ userName, id }, "new users")
+
     var foundIndex = allUsers.findIndex(item => userName == item.userName);
-  console.log(foundIndex)
-  console.log(allUsers)
-    if (foundIndex>-1) {
+    console.log(foundIndex)
+    console.log(allUsers)
+    if (foundIndex > -1) {
       console.log("updated user")
       allUsers[foundIndex] = { userName, id, socket: client.id };
-    } else{
+    } else {
       console.log("added user");
       allUsers.push({ userName, id, socket: client.id });
     }
@@ -45,11 +45,11 @@ app.use(session({
 }));
 // app.use(csrf());
 app.use('/static', express.static(path.join(__dirname, 'public')))
-app.get("/",function(req,res){
-    handle_database(req,res);
+app.get("/", function (req, res) {
+  handle_database(req, res);
 });
-app.get("/login",function(req,res){
-    handle_login(req,res);
+app.get("/login", function (req, res) {
+  handle_login(req, res);
 });
 // routes
 // app.get("/", (req, res) => {
@@ -68,11 +68,11 @@ app.get("/home", (req, res) => {
  */
 app.get("/questions", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
-   res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
-   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    questions= get_questions()
-    res.status(200).send(questions);
-  })
+  res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  questions = get_questions()
+  res.status(200).send(questions);
+})
 app.post("/login", (req, res) => {
   const { userName, emailId, password, group } = req.body;
   var cleanUser = {
