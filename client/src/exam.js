@@ -7,6 +7,7 @@ function Exam() {
   const [question, setQuestion] = useState({});
   const [questionId, setQuestionId] = useState(0);
   const [userAnsers, setuserAnsers] = useState([]);
+  const [userSelected, setuserSelected] = useState(null);
   useEffect(() => {
     fetch('http://localhost:3000/questions')
       .then(response => response.json())
@@ -20,10 +21,15 @@ function Exam() {
       })
       .catch(error => console.error(error));
   }, []);
-  const saveOptions=(e, value) => {
+  const addOrReplace = (array, element) => {
+    const i = array.findIndex(e => e.id === element.id);
+    if (i > -1) array[i] = element; // (2)
+    else array.push(element);
+    return array
+  }
+  const saveOptions = (e, value) => {
     console.log("user selected options", value)
-    const allAns= userAnsers
-    allAns.push(value)
+    const allAns = addOrReplace(userAnsers, value)
     setuserAnsers(allAns)
     console.log(allAns)
 
@@ -34,18 +40,38 @@ function Exam() {
 
     if (value === "Previous") {
       setQuestionId(questionId - 1)
-      setQuestion(data[questionId -  1])
-    } else {
+      setQuestion(data[questionId - 1])
+    } else if (value === 'clear') {
+      setQuestionId(questionId)
+      setQuestion(data[questionId])
+    }
+    else if (value === 'Review') {
       setQuestionId(questionId + 1)
       setQuestion(data[questionId + 1])
     }
-
+    else {
+      setQuestionId(questionId + 1)
+      setQuestion(data[questionId + 1])
+    }
+    // findUserAns(question)
+  }
+  const findUserAns = (element) => {
+    const userSelected = userAnsers.find(o => o.id === element.id);
+    console.log(userSelected, '-userSelected')
+    if (userSelected) {
+      setuserSelected(userSelected.value)
+    } else {
+      setuserSelected(null)
+    }
   }
   return (
     <div class="question-section">
       <section class="question">
-        <Questions questionInfo={question} clickCallback={(e, value) => getQuestion(e, value)} saveOptions={(e, value) => saveOptions(e, value)}/>
-        <RightPannel />
+        <Questions userAns={userAnsers.find(o => o.id === questionId)}
+          questionInfo={question}
+          clickCallback={(e, value) => getQuestion(e, value)}
+          saveOptions={(e, value) => saveOptions(e, value)} />
+        {data && <RightPannel count={data.length} selectedIndex={question.id}/>}
       </section>
     </div>
   );

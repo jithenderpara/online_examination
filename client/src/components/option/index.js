@@ -1,10 +1,15 @@
 import './option.css';
-
-function Options({values, changeOptions}) {
+import React, { useState, useEffect } from 'react';
+function Options({values, changeOptions, selected}) {
+    // const [selected, setSelected] = useState(null);
+    const handleChange=(e, key)=>{
+        // setSelected(key)
+        changeOptions(e, key)
+    }
     var tifOptions = Object.keys(values).map(function(key) {
         return <div class="option">
-        <label for="answer-1">
-            <input type="radio" id="answer-1" name="answer" value={key} onChange={(e, value) => changeOptions(e, key)} />
+        <label htmlFor={key}>
+            <input type="radio" id={key} checked={key===selected} name="answer" value={key} onChange={(e, value) => {handleChange(e, key)}} />
             {values[key]}
         </label>
     </div>
