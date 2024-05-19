@@ -7,21 +7,6 @@ var pool = mysql.createPool({
     database: 'online examination system',
     debug: false
 });
-// var con = mysql.createConnection({
-//     host: "localhost",
-//     user: "jithu",
-//     password: "jithu"
-//   });
-
-//   con.connect(function(err) {
-//     if (err) throw err;
-//     console.log("Connected!");
-//   });
-// 'root@localhost'
-
-// PORT= 3306
-// [{"Name":"Howard Orn","Credit_Card_Number":"5273471157342926","Issuer":"mastercard","Expiry_Date":"01/29","cvv":"757"},{"Name":"Cindy Nienow","Credit_Card_Number":"5542450319921228","Issuer":"mastercard","Expiry_Date":"05/27","cvv":"959"},{"Name":"Ralph Barrows Jr.","Credit_Card_Number":"5112165246887587","Issuer":"mastercard","Expiry_Date":"04/25","cvv":"374"},{"Name":"Whitney Brakus","Credit_Card_Number":"5274325090348755","Issuer":"mastercard","Expiry_Date":"10/26","cvv":"412"},
-// {"Name":"Sheryl Parisian PhD","Credit_Card_Number":"5444595154180725","Issuer":"mastercard","Expiry_Date":"02/26","cvv":"028"}]
 function handle_database(req, res) {
 
     pool.getConnection(function (err, connection) {
@@ -56,8 +41,8 @@ function handle_login(req, res) {
             res.json({ "code": 100, "status": "Error in connection database" });
             return;
         }
-        user_email = "jithu@gmail.com"
-        user_password = "1234"
+        console.log(req.body)
+        const {user_email, user_password}= req.body
         console.log('connected as id ' + connection.threadId);
         sql_query= `select * from students where email='${user_email}' AND password='${user_password}'`
         console.log(sql_query)
@@ -87,11 +72,101 @@ function handle_login(req, res) {
         });
     });
 }
+function handle_register(req, res) {
+    pool.getConnection(function (err, connection) {
+        console.log(err)
+        if (err) {
+            connection.release();
+            res.json({ "code": 100, "status": "Error in connection database" });
+            return;
+        }
+        console.log(req.body)
+        const {email, name, password, group}= req.body
+        console.log('connected as id ' + connection.threadId);
+        const sql_query = `INSERT INTO students (email, name, password, group) VALUES ('${email}', '${name}', '${password}', '${group}')`;
+        console.log(sql_query)
+        connection.query(sql_query, function (err, rows) {
+            connection.release();
+            if (!err) {
+                try {
+                    res.json(rows);
+                } catch (error) {
+                    res.json({ "code": 100, "status": "Error in "+ error });
+                }
 
-// module.exports.handle_login = handle_login
-// module.exports.handle_database = handle_database
+            }
+        });
 
+        connection.on('error', function (err) {
+            res.json({ "code": 100, "status": "Error in connection database" });
+            return;
+        });
+    });
+}
+function handle_setResults(req, res) {
+    pool.getConnection(function (err, connection) {
+        console.log(err)
+        if (err) {
+            connection.release();
+            res.json({ "code": 100, "status": "Error in connection database" });
+            return;
+        }
+        const {email, id, results}= req.body
+        console.log('connected as id ' + connection.threadId);
+        const sql_query = `INSERT INTO student_results (result, email, id) VALUES ('${results}', '${email}','${id}');`;
+        console.log(sql_query)
+        connection.query(sql_query, function (err, rows) {
+            connection.release();
+            if (!err) {
+                try {
+                    res.json(rows);
+                } catch (error) {
+                    res.json({ "code": 100, "status": "Error in "+ error });
+                }
+
+            }
+        });
+
+        connection.on('error', function (err) {
+            res.json({ "code": 100, "status": "Error in connection database" });
+            return;
+        });
+    });
+}
+function handle_getResults(req, res) {
+    pool.getConnection(function (err, connection) {
+        console.log(err)
+        if (err) {
+            connection.release();
+            res.json({ "code": 100, "status": "Error in connection database" });
+            return;
+        }
+        const {email, id, results}= req.body
+        console.log('connected as id ' + connection.threadId);
+        sql_query= `select * from student_results where email='${email}'`
+        console.log(sql_query)
+        connection.query(sql_query, function (err, rows) {
+            connection.release();
+            if (!err) {
+                try {
+                    res.json(rows);
+                } catch (error) {
+                    res.json({ "code": 100, "status": "Error in "+ error });
+                }
+
+            }
+        });
+
+        connection.on('error', function (err) {
+            res.json({ "code": 100, "status": "Error in connection database" });
+            return;
+        });
+    });
+}
 module.exports = {
     handle_login: handle_login,
     handle_database: handle_database,
+    handle_register: handle_register,
+    handle_setResults:handle_setResults,
+    handle_getResults:handle_getResults,
 };

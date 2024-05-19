@@ -10,7 +10,7 @@ function Exam() {
   const [userSelected, setuserSelected] = useState(null);
   
   useEffect(() => {
-    fetch('http://localhost:3000/questions')
+    fetch('http://localhost:3000/api/questions')
       .then(response => response.json())
       .then(json => {
         const newdata = json.map((item, idx) => ({
