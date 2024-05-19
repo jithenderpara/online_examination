@@ -41,6 +41,11 @@ app.get("/", function (req, res) {
 app.get("/login", function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 })
+app.get("/results", function (req, res) {
+  console.log(req.session, '-----------------------------------------session' )
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+})
+
 app.get("/logout", function (req, res) {
   req.session.destroy();
   req.session.user = null
@@ -77,6 +82,9 @@ app.post("/api/register", function (req, res) {
 });
 app.post("/api/setResults", (req, res) => {
   handle_setResults(req, res);
+})
+app.post("/api/getResults", (req, res) => {
+  handle_getResults(req, res);
 })
 
 /*****

@@ -2,6 +2,7 @@ import './exam.css';
 import axios from 'axios';
 import Questions from './components/questions';
 import RightPannel from './components/rightPannel';
+import {SAVE_RESULTS, QUESTIONS} from './components/apiEndpoints';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
 function Exam() {
@@ -14,7 +15,7 @@ function Exam() {
   const [message, setMessage] = useState('');
   const navigate = useNavigate()
   useEffect(() => {
-    fetch('http://localhost:3000/api/questions')
+    fetch(QUESTIONS)
       .then(response => response.json())
       .then(json => {
         const newdata = json
@@ -38,7 +39,7 @@ function Exam() {
   }
   const saveResults = async (results) => {
     try {
-      const response = await axios.post('http://localhost:3000/api/setResults', { results: results, email:'jithu@gmail.com', id:1 });
+      const response = await axios.post(SAVE_RESULTS, { results: results, email:'jithu@gmail.com', id:1 });
       // Handle successful login (e.g., redirect to dashboard)
       const data = response.data
       if (data.length > 0) {
@@ -71,6 +72,7 @@ function Exam() {
     }
     else if (value === 'Finish') {
       saveResults(userAnsers)
+      navigate(`/results`)
     }
     else {
       setQuestionId(questionId + 1)
@@ -95,7 +97,7 @@ function Exam() {
             questionInfo={question}
             clickCallback={(e, value) => getQuestion(e, value)}
             saveOptions={(e, value) => saveOptions(e, value)} />
-          {data && <RightPannel count={data.length} selectedIndex={question.id} />}
+          {data && <RightPannel count={data.length} selectedIndex={question.id} clickCallback={(e, value) => getQuestion(e, value)}/>}
         </section>
       </div>
     </div>

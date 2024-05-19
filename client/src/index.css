@@ -5,7 +5,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* alignment */
+  margin: 0;
+  /* display: grid; */
+  /* place-content: center; */
+  /* sizes */
+  /* min-height: 100vh; */
+  /* color */
+  background-color: hsl(217, 54%, 11%);
+  /* color: #fff; */
 }
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -21,7 +31,4 @@ code {
 
 main {
   padding: 20px;
-  /* Add left padding if desired: */
-
-  border-style: groove;
 }

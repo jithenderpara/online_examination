@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom"
+import {LOGIN} from '../apiEndpoints';
 
 import axios from 'axios';
 const Login = () => {
@@ -11,7 +12,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3000/api/login', { user_email: name, user_password: password });
+      const response = await axios.post(LOGIN, { user_email: name, user_password: password });
       // Handle successful login (e.g., redirect to dashboard)
       console.log('Login successful:', response.data);
       const data = response.data

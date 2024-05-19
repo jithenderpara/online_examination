@@ -25,7 +25,7 @@ function Questions({ questionInfo = { question: "", id:0, value:null}, clickCall
     //  const q= JSON.parse(questionInfo)
     return (
         <div>
-            <section>
+            <section className='questionInfo'>
                 {/* {JSON.stringify(props)} */}
                 {questionInfo && (
                     <div>

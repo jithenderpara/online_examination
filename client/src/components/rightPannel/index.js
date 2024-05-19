@@ -2,7 +2,7 @@ import './rightPannel.css';
 import SummaryGrid from '../summaryGrid';
 import Stopwatch from '../stopwatch';
 import React, { Component }  from 'react';
-function RightPannel({ count, selectedIndex }) {
+function RightPannel({ count, selectedIndex, clickCallback }) {
     let List = ({ value }) => {
         console.log(value)
         const getClass = (i, value) => {
@@ -20,8 +20,8 @@ function RightPannel({ count, selectedIndex }) {
     }
     return (
         <aside class="right-panel">
-            <Stopwatch />
-            <h1>REASONING</h1>
+            <Stopwatch clickCallback={(e, value)=>clickCallback(e, value)}/>
+            <h1>Questions Summary</h1>
             <List value={selectedIndex} />
             {/* <SummaryGrid /> */}
         </aside>

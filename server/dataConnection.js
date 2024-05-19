@@ -156,12 +156,13 @@ function handle_getResults(req, res) {
         }
         const {email, id, results}= req.body
         console.log('connected as id ' + connection.threadId);
-        sql_query= `select name, group, result, finalStatus, marks from students where email='${email}'`
+        sql_query= "SELECT `name`, `group`, `finalStatus`, `marks` from students where email="+ `"${email}"`
         console.log(sql_query)
         connection.query(sql_query, function (err, rows) {
             connection.release();
             if (!err) {
                 try {
+                    console.log(rows)
                     res.json(rows);
                 } catch (error) {
                     res.json({ "code": 100, "status": "Error in "+ error });
