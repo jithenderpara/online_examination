@@ -111,16 +111,29 @@ function handle_setResults(req, res) {
             res.json({ "code": 100, "status": "Error in connection database" });
             return;
         }
-        const {email, id, results}= req.body
+        const {results}= req.body
+        // const {email, id} = req.session.user
+        const {email, id} = req.body
         console.log('connected as id ' + connection.threadId);
-        const sql_query = `INSERT INTO student_results (result, email, id) VALUES ('${results}', '${email}','${id}');`;
+        let status= "Fail"
+        let results_data= results.map((result)=>({"id":result.id, "value":result.value, "ans":result.ans}))
+        let score = results_data.filter((obj)=>obj.value == obj.ans);
+        score = score.length
+        results_data = JSON.stringify(results_data)
+        let perc = ((score/100) * 100).toFixed(3);
+        if (perc >=35){
+            status= "Pass"
+        }
+        const sql_query= `UPDATE students SET result = '${(results_data)}', finalStatus = '${status}', marks='${score}' WHERE email = '${email}';`
         console.log(sql_query)
         connection.query(sql_query, function (err, rows) {
             connection.release();
             if (!err) {
                 try {
+                    console.log(rows)
                     res.json(rows);
                 } catch (error) {
+                    console.log(error)
                     res.json({ "code": 100, "status": "Error in "+ error });
                 }
 
@@ -143,7 +156,7 @@ function handle_getResults(req, res) {
         }
         const {email, id, results}= req.body
         console.log('connected as id ' + connection.threadId);
-        sql_query= `select * from student_results where email='${email}'`
+        sql_query= `select name, group, result, finalStatus, marks from students where email='${email}'`
         console.log(sql_query)
         connection.query(sql_query, function (err, rows) {
             connection.release();

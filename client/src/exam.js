@@ -1,22 +1,23 @@
 import './exam.css';
+import axios from 'axios';
 import Questions from './components/questions';
 import RightPannel from './components/rightPannel';
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom"
 function Exam() {
   const [data, setData] = useState(null);
+  const [userData, setuserData] = useState(null);
   const [question, setQuestion] = useState({});
   const [questionId, setQuestionId] = useState(0);
   const [userAnsers, setuserAnsers] = useState([]);
   const [userSelected, setuserSelected] = useState(null);
-  
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate()
   useEffect(() => {
     fetch('http://localhost:3000/api/questions')
       .then(response => response.json())
       .then(json => {
-        const newdata = json.map((item, idx) => ({
-          ...item,
-          id: idx
-        }))
+        const newdata = json
         setData(newdata)
         setQuestion(newdata[questionId])
       })
@@ -35,6 +36,24 @@ function Exam() {
     console.log(allAns)
 
   }
+  const saveResults = async (results) => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/setResults', { results: results, email:'jithu@gmail.com', id:1 });
+      // Handle successful login (e.g., redirect to dashboard)
+      const data = response.data
+      if (data.length > 0) {
+        console.log('saved in DB successful:', response.data);
+        navigate(`/login`)
+      }
+      else {
+        console.error(data);
+        setMessage('Error in saving');
+      }
+    } catch (error) {
+      console.error(error);
+      setMessage('Error in saving');
+    }
+  }
   const getQuestion = (e, value) => {
     console.log(value, "getQuestion----------- index")
     // setQuestion(data[1])
@@ -49,6 +68,9 @@ function Exam() {
     else if (value === 'Review') {
       setQuestionId(questionId + 1)
       setQuestion(data[questionId + 1])
+    }
+    else if (value === 'Finish') {
+      saveResults(userAnsers)
     }
     else {
       setQuestionId(questionId + 1)
