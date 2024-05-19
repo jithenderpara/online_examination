@@ -9,6 +9,7 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const { handle_database, handle_login, handle_register, handle_getResults, handle_setResults } = require("./dataConnection")
 const { get_questions } = require("./questions")
+const upload= require("./imageUpload")
 const cors = require('cors'); // Import the cors package
 // Define the CORS options
 const corsOptions = {
@@ -29,6 +30,7 @@ app.use(session({
   activeDuration: 5 * 60 * 1000,
 }));
 app.use(express.static(path.join(__dirname, 'build')));
+app.use('/uploads', express.static('./uploads'));
 app.get("/", function (req, res) {
   const {user}= req.session
   console.log(user, '------------------------user')
@@ -78,6 +80,15 @@ app.post("/api/login", function (req, res) {
   handle_login(req, res);
 });
 app.post("/api/register", function (req, res) {
+  upload(req, res, function (err) {
+    if (err) {
+      // This is a good practice when you want to handle your errors differently
+
+      return
+    }
+
+    // Everything went fine 
+  })
   handle_register(req, res);
 });
 app.post("/api/setResults", (req, res) => {
