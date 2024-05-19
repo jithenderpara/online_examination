@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom"
-import {LOGIN} from '../apiEndpoints';
-
+import { LOGIN } from '../apiEndpoints';
+import './login.css';
 import axios from 'axios';
 const Login = () => {
   const [name, setName] = useState('');
@@ -20,7 +20,7 @@ const Login = () => {
         navigate(`/`)
         setMessage('Login successful');
       }
-      else{
+      else {
         console.error(data);
         setMessage('Invalid username or password');
       }
@@ -32,15 +32,23 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit} className="login-form">
-        <label htmlFor="name">Name:</label>
-        <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
-        <label htmlFor="password">Password:</label>
-        <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        <button type="submit">Login</button>
-      </form>
-      {message && <p className="message">{message}</p>}
+      <div class="login-box">
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit} className="login-form">
+          <div class="user-box">
+            
+            <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+            <label htmlFor="name">Name:</label>
+          </div>
+          <div class="user-box">
+            
+            <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <label htmlFor="password">Password:</label>
+          </div>
+          <button className='login-btn' type="submit">Login</button>
+        </form>
+        {message && <p className="message">{message}</p>}
+      </div>
     </div>
   );
 };
