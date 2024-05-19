@@ -38,7 +38,7 @@ const Login = () => {
           <div class="user-box">
             
             <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
-            <label htmlFor="name">Name:</label>
+            <label htmlFor="name">Email:</label>
           </div>
           <div class="user-box">
             
